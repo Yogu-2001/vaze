@@ -3,6 +3,7 @@ import { TextField, Button } from "@material-ui/core";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../redux/features/alertSlice";
+import { setUser, setToken } from "../redux/features/authSlice";
 import axios from "axios";
 const Login = () => {
   const navigate = useNavigate();
@@ -13,7 +14,16 @@ const Login = () => {
     await axios
       .post("http://localhost:8080/api/v1/auth/login", values)
       .then((res) => {
+        localStorage.setItem(
+          "authToken",
+          JSON.stringify({
+            token: res.data.token,
+            user: res.data.user,
+          })
+        );
         message.success(res.data.message);
+        dispatch(setUser(res.data.user));
+        dispatch(setToken(res.data.token));
         navigate("/dashboard");
         dispatch(setLoading(false));
       })

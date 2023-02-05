@@ -1,6 +1,6 @@
 import { message, Form } from "antd";
 import { TextField, Button } from "@material-ui/core";
-import { setLoading } from "../redux/features/alertSlice";
+import { setLoading } from "../../redux/features/alertSlice";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 const AddStudent = () => {
@@ -9,7 +9,7 @@ const AddStudent = () => {
     const { name, email, password } = values;
     dispatch(setLoading(true));
     axios
-      .post("http://localhost:8080/api/v1/auth/register", {
+      .post("http://localhost:8080/api/v1/admin/add-student", {
         name,
         email,
         password,
@@ -39,6 +39,18 @@ const AddStudent = () => {
       onFinishFailed={onFinishFailed}
     >
       <h4>Add Student</h4>
+      <Form.Item
+        name="name"
+        rules={[{ required: true, message: "Please input your name!" }]}
+      >
+        <TextField
+          type={"text"}
+          label="Name"
+          placeholder="enter name"
+          variant="standard"
+          className="col-12 my-3"
+        />
+      </Form.Item>
       <Form.Item
         name="email"
         rules={[{ required: true, message: "Please input your valid email!" }]}

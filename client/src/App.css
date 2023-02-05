@@ -1,3 +1,6 @@
-.jodit-status-bar{
-   visibility: hidden;
+.jodit-status-bar {
+  visibility: hidden;
+}
+.Text-center {
+  color: red;
 }

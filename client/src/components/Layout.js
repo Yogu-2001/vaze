@@ -117,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Layout() {
   const classes = useStyles();
   const navigate = useNavigate();
-  const { user } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.auth);
   const [state, setState] = React.useState({
     left: false,
   });
@@ -278,12 +278,12 @@ export default function Layout() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <Avatar
+              {/* <Avatar
                 alt="profile-photo"
-                src={user ? user.providerData[0].photoURL : ""}
+                // src={user ? user.providerData[0].photoURL : ""}
                 component={Link}
                 to={`/view-profile/${user && user.uid}`}
-              />
+              /> */}
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>
@@ -294,10 +294,10 @@ export default function Layout() {
               onClick={handleMobileMenuOpen}
               color="inherit"
             >
-              <Avatar
+              {/* <Avatar
                 alt="profile-photo"
                 src={user ? user.providerData[0].photoURL : ""}
-              />
+              /> */}
             </IconButton>
           </div>
         </Toolbar>

@@ -1,11 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { userSlice } from "./features/userSlice";
+import { authSlice } from "./features/authSlice";
 import { alertSlice } from "./features/alertSlice";
-import { commentSlice } from "./features/commentSlice";
 export default configureStore({
   reducer: {
-    user: userSlice.reducer,
+    auth: authSlice.reducer,
     alert: alertSlice.reducer,
-    comment: commentSlice.reducer,
   },
 });
