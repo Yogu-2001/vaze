@@ -16,14 +16,16 @@ const App = () => {
   const { loading } = useSelector((state) => state.alert);
 
   useEffect(() => {
-    JSON.parse(localStorage.getItem("authToken"))
+    console.log("called after logout");
+    console.log(localStorage.getItem("authToken"));
+    localStorage.getItem("authToken")
       ? dispatch(setUser(JSON.parse(localStorage.getItem("authToken"))?.user))
       : dispatch(setUser(null));
 
-    JSON.parse(localStorage.getItem("authToken"))
+    localStorage.getItem("authToken")
       ? dispatch(setToken(JSON.parse(localStorage.getItem("authToken"))?.token))
       : dispatch(setToken(""));
-  }, [localStorage.getItem("authToken")]);
+  }, []);
 
   if (!loading) {
     return (

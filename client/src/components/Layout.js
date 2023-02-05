@@ -32,10 +32,11 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import MailIcon from "@material-ui/icons/Mail";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { message } from "antd";
+import { setToken, setUser } from "../redux/features/authSlice";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -116,11 +117,21 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Layout() {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
+
   const [state, setState] = React.useState({
     left: false,
   });
+
+  const logout = () => {
+    localStorage.removeItem("authToken");
+    dispatch(setUser(null));
+    dispatch(setToken(""));
+    navigate("/", { replace: true });
+  };
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const toggleDrawer = (anchor, open) => (event) => {
@@ -197,15 +208,7 @@ export default function Layout() {
         ))}
         {user && (
           <ListItem>
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={async () => {
-                // await signOut(auth);
-                message.success("Logged out");
-                navigate("/", { replace: true });
-              }}
-            >
+            <Button variant="outlined" color="secondary" onClick={logout}>
               Logout
             </Button>
           </ListItem>
