@@ -11,6 +11,7 @@ import HomePage from "./pages/HomePage";
 import AdminRoute from "./routes/AdminRoute";
 import PublicRoute from "./routes/PublicRoute";
 import { setToken, setUser } from "./redux/features/authSlice";
+import CreateProfile from "./pages/student/CreateProfile";
 const App = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.alert);
@@ -57,6 +58,14 @@ const App = () => {
             element={
               <PrivateRoute>
                 <Dashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/create-profile"
+            element={
+              <PrivateRoute>
+                <CreateProfile />
               </PrivateRoute>
             }
           />
