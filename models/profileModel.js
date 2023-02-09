@@ -40,6 +40,18 @@ const profileSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    placed: {
+      type: Boolean,
+      default: false,
+    },
+    companyPlaced: {
+      type: Array,
+      default: [],
+    },
+    package: {
+      type: Array,
+      default: [],
+    },
     sscschoolname: { type: String, required: true },
     class10th: { type: Number, required: true },
     hsccollege: { type: String, required: true },

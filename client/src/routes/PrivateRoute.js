@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Cookies from "js-cookie";
-import { Navigate, Outlet } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
 const PrivateRoute = ({ children }) => {
   console.log("called");
-  const navigate = useNavigate();
   const [ok, setOk] = useState(false);
   useEffect(() => {
     const checkAuth = async () => {

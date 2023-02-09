@@ -13,3 +13,5 @@ export const createProfileCtrl = async (req, res) => {
     });
   }
 };
+
+export const getAllNotificationCtrl = async (req, res) => {};

@@ -16,6 +16,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@material-ui/core";
+import ListAltIcon from "@material-ui/icons/ListAlt";
 import Avatar from "@material-ui/core/Avatar";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
@@ -169,43 +170,71 @@ export default function Layout() {
       </div>
       <Divider />
       <List>
-        {[
-          {
-            text: "Dashboard",
-            path: "/dashboard",
-            icon: <DashboardIcon />,
-          },
-          {
-            text: "Create Profile",
-            path: "/create-profile",
-            icon: <AccountCircleIcon />,
-          },
-          {
-            text: "Add Student",
-            path: "/admin/add-student",
-            icon: <GroupAddIcon />,
-          },
-          {
-            text: "Add Notice",
-            path: "/admin/add-notice",
-            icon: <DescriptionIcon />,
-          },
-          {
-            text: "Add Placement Drive",
-            path: "/admin/add-drive",
-            icon: <NoteAddIcon />,
-          },
-          {
-            text: "Discussion-Forum",
-            path: "/chat-forum",
-            icon: <ForumIcon />,
-          },
-        ].map((doc, index) => (
-          <ListItem button key={doc.text}>
-            <ListItemIcon>{doc.icon}</ListItemIcon>
-            <ListItemText primary={<Link to={doc.path}>{doc.text}</Link>} />
-          </ListItem>
-        ))}
+        {user &&
+          user.role === 1 &&
+          [
+            {
+              text: "Dashboard",
+              path: "/dashboard",
+              icon: <DashboardIcon />,
+            },
+            {
+              text: "Create Profile",
+              path: "/create-profile",
+              icon: <AccountCircleIcon />,
+            },
+            {
+              text: "Add Student",
+              path: "/admin/add-student",
+              icon: <GroupAddIcon />,
+            },
+            {
+              text: "Add Notice",
+              path: "/admin/add-notice",
+              icon: <DescriptionIcon />,
+            },
+            {
+              text: "Add Placement Drive",
+              path: "/admin/add-drive",
+              icon: <NoteAddIcon />,
+            },
+            {
+              text: "Students List",
+              path: "/admin/all-students",
+              icon: <ListAltIcon />,
+            },
+            {
+              text: "Discussion-Forum",
+              path: "/chat-forum",
+              icon: <ForumIcon />,
+            },
+          ].map((doc, index) => (
+            <ListItem button key={index}>
+              <ListItemIcon>{doc.icon}</ListItemIcon>
+              <ListItemText primary={<Link to={doc.path}>{doc.text}</Link>} />
+            </ListItem>
+          ))}
+        <List>
+          {user &&
+            user.role != 1 &&
+            [
+              {
+                text: "Dashboard",
+                path: "/dashboard",
+                icon: <DashboardIcon />,
+              },
+              {
+                text: "Create Profile",
+                path: "/create-profile",
+                icon: <AccountCircleIcon />,
+              },
+            ].map((doc, index) => (
+              <ListItem button key={index}>
+                <ListItemIcon>{doc.icon}</ListItemIcon>
+                <ListItemText primary={<Link to={doc.path}>{doc.text}</Link>} />
+              </ListItem>
+            ))}
+        </List>
         {user && (
           <ListItem>
             <Button variant="outlined" color="secondary" onClick={logout}>
@@ -245,9 +274,12 @@ export default function Layout() {
     <div className={classes.grow}>
       <AppBar position="static" className="d-flex justify-content-center">
         <Toolbar>
-          <Button onClick={toggleDrawer("left", true)}>
-            <MenuIcon />
-          </Button>
+          {user && (
+            <Button onClick={toggleDrawer("left", true)}>
+              <MenuIcon />
+            </Button>
+          )}
+
           <Drawer
             anchor={"left"}
             open={state["left"]}

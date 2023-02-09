@@ -12,12 +12,14 @@ import AdminRoute from "./routes/AdminRoute";
 import PublicRoute from "./routes/PublicRoute";
 import { setToken, setUser } from "./redux/features/authSlice";
 import CreateProfile from "./pages/student/CreateProfile";
+import AddNotice from "./pages/admin/AddNotice";
+import AddPlacement from "./pages/admin/AddPlacement";
+import AllStudentsTable from "./pages/admin/AllStudentsTable";
 const App = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.alert);
 
   useEffect(() => {
-    console.log("called after logout");
     console.log(localStorage.getItem("authToken"));
     localStorage.getItem("authToken")
       ? dispatch(setUser(JSON.parse(localStorage.getItem("authToken"))?.user))
@@ -46,11 +48,33 @@ const App = () => {
           <Route
             path="/admin/add-student"
             element={
-              <PrivateRoute>
-                <AdminRoute>
-                  <AddStudent />
-                </AdminRoute>
-              </PrivateRoute>
+              <AdminRoute>
+                <AddStudent />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/all-students"
+            element={
+              <AdminRoute>
+                <AllStudentsTable />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/add-notice/"
+            element={
+              <AdminRoute>
+                <AddNotice />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/add-drive/"
+            element={
+              <AdminRoute>
+                <AddPlacement />
+              </AdminRoute>
             }
           />
           <Route
