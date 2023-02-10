@@ -228,6 +228,13 @@ export default function Layout() {
                 path: "/create-profile",
                 icon: <AccountCircleIcon />,
               },
+              {
+                text: "All Drives",
+                path: "/student/all-drives",
+                icon: (
+                  <Avatar src="https://icon-library.com/images/apply-icon-png/apply-icon-png-24.jpg" />
+                ),
+              },
             ].map((doc, index) => (
               <ListItem button key={index}>
                 <ListItemIcon>{doc.icon}</ListItemIcon>
@@ -335,6 +342,9 @@ export default function Layout() {
               /> */}
             </IconButton>
           </div>
+          <Badge badgeContent={4} color="primary">
+            <MailIcon />
+          </Badge>
         </Toolbar>
       </AppBar>
     </div>

@@ -1,5 +1,5 @@
 import profileModel from "../models/profileModel.js";
-
+import placementModel from "../models/placementModel.js";
 export const createProfileCtrl = async (req, res) => {
   try {
     const profile = new profileModel(req.body);
@@ -14,4 +14,11 @@ export const createProfileCtrl = async (req, res) => {
   }
 };
 
-export const getAllNotificationCtrl = async (req, res) => {};
+export const getAllDrives = async (req, res) => {
+  try {
+    const alldrives = await placementModel.find({});
+    res.status(200).json(alldrives);
+  } catch (error) {
+    res.status(501).json({ message: "failed to fetch all drives", error });
+  }
+};

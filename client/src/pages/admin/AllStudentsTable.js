@@ -7,6 +7,8 @@ import EditIcon from "@material-ui/icons/Edit";
 import Avatar from "@material-ui/core/Avatar";
 import { Button, Link, MenuItem, Select, TextField } from "@material-ui/core";
 import { message } from "antd";
+import { useDispatch } from "react-redux";
+import { setDrives } from "../../redux/features/driveSlice";
 const columns = [
   {
     field: "_id",
@@ -53,6 +55,7 @@ const columns = [
 ];
 
 const AllStudentsTable = () => {
+  const dispatch = useDispatch();
   const [rows, setRows] = React.useState([]);
   const [selectedRows, setSelectedRows] = React.useState([]);
   const [companies, setCompanies] = React.useState([]);
@@ -66,6 +69,7 @@ const AllStudentsTable = () => {
       .then((res) => {
         console.log(res.data);
         setRows(res.data.allstudents);
+        dispatch(setDrives(res.data.allCompanies));
         setCompanies(res.data.allCompanies);
       });
   };

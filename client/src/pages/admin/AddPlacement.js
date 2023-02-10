@@ -1,18 +1,38 @@
 import React, { useRef, useState, useEffect } from "react";
 import JoditEditor from "jodit-react";
-import { Button, Paper, TextField, Typography } from "@material-ui/core";
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  Paper,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 import axios from "axios";
 import { message } from "antd";
 
 const AddPlacement = () => {
   const editor = useRef("");
+  const [checked, setChecked] = useState(false);
+  const [branches, setBranches] = useState([]);
   const [con, setCon] = useState({
     companyName: "",
     driveDate: "",
     editorData: "",
     jdfile: "",
+    branchcriteria: [],
+    engAggrrpercentCriteria: "",
   });
 
+  const handleBranchChange = (e) => {
+    const index = branches.indexOf(e.target.value);
+    if (index === -1) {
+      setBranches([...branches, e.target.value]);
+    } else {
+      setBranches(branches.filter((branch) => branch !== e.target.value));
+    }
+  };
   const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
@@ -31,6 +51,8 @@ const AddPlacement = () => {
     // console.log(con.jdfile);
     // const base64 = await convertToBase64(con.jdfile);
     // setCon({ ...con, jdfile: base64 });
+    setCon({ ...con, branchcriteria: branches });
+
     await axios
       .post("http://localhost:8080/api/v1/admin/add-placement", {
         ...con,
@@ -43,6 +65,7 @@ const AddPlacement = () => {
           driveDate: "",
           editorData: "",
           jdfile: "",
+          branchcriteria: [],
         });
       })
       .catch((err) => {
@@ -52,6 +75,7 @@ const AddPlacement = () => {
           driveDate: "",
           editorData: "",
           jdfile: "",
+          branchcriteria: [],
         });
       });
   };
@@ -62,8 +86,8 @@ const AddPlacement = () => {
         className="col-md-8 mx-auto add-drive-form "
         encType="multipart/form-data"
       >
-        <Typography variant="h4" color="textSecondary" className="my-4">
-          Add new discussion
+        <Typography variant="h4" className="my-4">
+          Add Placement Drive
         </Typography>
         <div className="d-flex justify-content-between flex-wrap">
           <TextField
@@ -105,7 +129,32 @@ const AddPlacement = () => {
           onChange={(e) => setCon({ ...con, jdfile: e.target.files[0] })}
           className="col-md-5 col-12 my-3"
         />
-
+        <hr />
+        <br />
+        <h4>Criteria Form:</h4>
+        <Typography>pick the candidates who can aply</Typography>
+        <FormGroup>
+          {["CMPN", "INFT", "ETRX", "EXTC", "BIOM"].map((branch, i) => (
+            <FormControlLabel
+              control={<Checkbox />}
+              label={branch}
+              value={branch}
+              checked={branches.includes(branch)}
+              onChange={handleBranchChange}
+            />
+          ))}
+        </FormGroup>
+        <TextField
+          type={"number"}
+          variant="outlined"
+          label="Engineering Aggr % Criteria"
+          name="engAggrrpercentCriteria"
+          value={con.engAggrrpercentCriteria}
+          className="col-md-5 col-12 my-3"
+          onChange={(e) =>
+            setCon({ ...con, engAggrrpercentCriteria: e.target.value })
+          }
+        />
         <br />
         {
           <Button

@@ -10,6 +10,14 @@ const placementSchema = new mongoose.Schema(
       type: String,
       // required: true,
     },
+    branchcriteria: {
+      type: Array,
+      default: [],
+    },
+    engAggrrpercentCriteria: {
+      type: Number,
+      default: NaN,
+    },
     editorData: {
       type: String,
       required: true,
