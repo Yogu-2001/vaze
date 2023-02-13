@@ -16,6 +16,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@material-ui/core";
+import PageviewIcon from "@material-ui/icons/Pageview";
 import ListAltIcon from "@material-ui/icons/ListAlt";
 import Avatar from "@material-ui/core/Avatar";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -208,6 +209,11 @@ export default function Layout() {
               path: "/chat-forum",
               icon: <ForumIcon />,
             },
+            {
+              text: "View Drives",
+              path: "/view-drives",
+              icon: <PageviewIcon />,
+            },
           ].map((doc, index) => (
             <ListItem button key={index}>
               <ListItemIcon>{doc.icon}</ListItemIcon>
@@ -227,6 +233,11 @@ export default function Layout() {
                 text: "Create Profile",
                 path: "/create-profile",
                 icon: <AccountCircleIcon />,
+              },
+              {
+                text: "View Drives",
+                path: "/view-drives",
+                icon: <PageviewIcon />,
               },
               {
                 text: "All Drives",

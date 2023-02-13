@@ -22,3 +22,15 @@ export const getAllDrives = async (req, res) => {
     res.status(501).json({ message: "failed to fetch all drives", error });
   }
 };
+
+export const getallplacedcompanies = async (req, res) => {
+  try {
+    const allcompanies = await profileModel.find(
+      { userId: req.params.id },
+      { placedData: 1 }
+    );
+    res.status(200).send(allcompanies);
+  } catch (error) {
+    res.status(501).json({ message: "failed to fetch placed data" });
+  }
+};

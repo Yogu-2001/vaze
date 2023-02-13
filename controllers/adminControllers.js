@@ -3,7 +3,7 @@ import noticeModel from "../models/noticeModel.js";
 import { comparePassword, hashPassword } from "./../helpers/authHelper.js";
 import placementModel from "../models/placementModel.js";
 import profileModel from "../models/profileModel.js";
-
+import allPlacementModel from "../models/allPlacementModel.js";
 export const addStudents = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -92,8 +92,10 @@ export const updatePlacedStatus = async (req, res) => {
           placed: true,
         },
         $push: {
-          package: req.body.package,
-          companyPlaced: req.body.companyName,
+          placedData: {
+            company: req.body.companyName,
+            package: req.body.package,
+          },
         },
       },
 

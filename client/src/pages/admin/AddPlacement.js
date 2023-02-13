@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import axios from "axios";
 import { message } from "antd";
+import FileBase64 from "react-file-base64";
 
 const AddPlacement = () => {
   const editor = useRef("");
@@ -20,8 +21,8 @@ const AddPlacement = () => {
     companyName: "",
     driveDate: "",
     editorData: "",
-    jdfile: "",
     branchcriteria: [],
+    jdfile: "",
     engAggrrpercentCriteria: "",
   });
 
@@ -33,51 +34,33 @@ const AddPlacement = () => {
       setBranches(branches.filter((branch) => branch !== e.target.value));
     }
   };
-  const convertToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(con.jdfile);
-    // const base64 = await convertToBase64(con.jdfile);
-    // setCon({ ...con, jdfile: base64 });
     setCon({ ...con, branchcriteria: branches });
-
-    await axios
-      .post("http://localhost:8080/api/v1/admin/add-placement", {
-        ...con,
-        // jdfile: base64,
-      })
-      .then((res) => {
-        message.success(res.data.message);
-        setCon({
-          companyName: "",
-          driveDate: "",
-          editorData: "",
-          jdfile: "",
-          branchcriteria: [],
-        });
-      })
-      .catch((err) => {
-        message.error(err.response.data.message);
-        setCon({
-          companyName: "",
-          driveDate: "",
-          editorData: "",
-          jdfile: "",
-          branchcriteria: [],
-        });
-      });
+    con.jdfile &&
+      (await axios
+        .post("http://localhost:8080/api/v1/admin/add-placement", con)
+        .then((res) => {
+          message.success(res.data.message);
+          setCon({
+            companyName: "",
+            driveDate: "",
+            editorData: "",
+            jdfile: "",
+            branchcriteria: [],
+          });
+        })
+        .catch((err) => {
+          message.error(err.response.data.message);
+          setCon({
+            companyName: "",
+            driveDate: "",
+            editorData: "",
+            jdfile: "",
+            branchcriteria: [],
+          });
+        }));
   };
   return (
     <>
@@ -123,12 +106,13 @@ const AddPlacement = () => {
           onBlur={(newContent) => setCon({ ...con, editorData: newContent })}
           onChange={(newContent) => {}}
         />
-        <TextField
-          variant="outlined"
-          type="file"
-          onChange={(e) => setCon({ ...con, jdfile: e.target.files[0] })}
+
+        <FileBase64
+          multiple={false}
+          onDone={({ base64 }) => setCon({ ...con, jdfile: base64 })}
           className="col-md-5 col-12 my-3"
         />
+
         <hr />
         <br />
         <h4>Criteria Form:</h4>
@@ -166,7 +150,6 @@ const AddPlacement = () => {
             Add Drive
           </Button>
         }
-
         <Button variant="contained" color="secondary">
           Clear
         </Button>

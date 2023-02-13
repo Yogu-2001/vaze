@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridToolbarExport,
+} from "@mui/x-data-grid";
 import axios from "axios";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import CancelIcon from "@material-ui/icons/Cancel";
@@ -95,6 +99,15 @@ const columns = [
     ),
   },
 ];
+
+function CustomToolbar() {
+  return (
+    <GridToolbarContainer>
+      <GridToolbarExport csvOptions={{ allColumns: true }} />
+    </GridToolbarContainer>
+  );
+}
+
 const AllDrivesTable = () => {
   const [rows, setRows] = useState([]);
   useEffect(() => {
@@ -115,6 +128,9 @@ const AllDrivesTable = () => {
         columns={columns}
         pageSize={5}
         getRowId={(row) => row._id}
+        components={{
+          Toolbar: CustomToolbar,
+        }}
       />
     </>
   );

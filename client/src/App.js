@@ -16,6 +16,7 @@ import AddNotice from "./pages/admin/AddNotice";
 import AddPlacement from "./pages/admin/AddPlacement";
 import AllStudentsTable from "./pages/admin/AllStudentsTable";
 import AllDrivesTable from "./pages/student/AllDrivesTable";
+import ViewProfile from "./pages/student/ViewProfile";
 const App = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.alert);
@@ -91,6 +92,14 @@ const App = () => {
             element={
               <PrivateRoute>
                 <AllDrivesTable />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/view-drives"
+            element={
+              <PrivateRoute>
+                <ViewProfile />
               </PrivateRoute>
             }
           />

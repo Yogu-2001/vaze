@@ -8,7 +8,7 @@ const placementSchema = new mongoose.Schema(
     },
     jdfile: {
       type: String,
-      // required: true,
+      required: true,
     },
     branchcriteria: {
       type: Array,

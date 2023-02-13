@@ -4,34 +4,12 @@ import { Box, Button, Card } from "@material-ui/core";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import FileBase64 from "react-file-base64";
 const CreateProfile = () => {
   const { user } = useSelector((state) => state.auth);
   const [details, setDetails] = useState({});
 
-  const getFile = (e) => {
-    console.log("Upload event:", e);
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e && e.fileList;
-  };
-
-  const convertToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
   const onFinish = async (values) => {
-    const base64 = await convertToBase64(values.photourl[0].originFileObj);
-    const resumebSE64 = await convertToBase64(values.resume[0].originFileObj);
-    setDetails({ ...values, photourl: base64, resume: resumebSE64 });
     await axios
       .post("http://localhost:8080/api/v1/user/create-profile", {
         ...details,
@@ -95,22 +73,17 @@ const CreateProfile = () => {
           <Input.TextArea rows={3} />
         </Form.Item>
         <Form.Item
-          label="upload profile photo"
-          // valuePropName="fileList"
+          label="profile photo"
+          rules={[{ required: true, message: "Please input your photo!" }]}
           className="col-md-3 col-sm-5 col-10 mx-2"
-          name={"photourl"}
-          getValueFromEvent={getFile}
+          required
         >
-          <Upload
-            listType="picture-card"
-            maxCount={1}
-            accept="image/png ,image/jpeg"
-          >
-            <div>
-              <PlusOutlined />
-              <div style={{ marginTop: 8 }}>Upload</div>
-            </div>
-          </Upload>
+          <FileBase64
+            multiple={false}
+            onDone={({ base64 }) =>
+              setDetails({ ...details, photourl: base64 })
+            }
+          />
         </Form.Item>
 
         <Form.Item
@@ -230,18 +203,16 @@ const CreateProfile = () => {
         </Form.Item>
         <Form.Item
           label="upload resume"
-          // valuePropName="fileList"
+          rules={[{ required: true, message: "Please input your resume!" }]}
           className="col-md-3 col-sm-5 col-10 mx-2"
-          name={"resume"}
-          getValueFromEvent={getFile}
+          required
         >
-          <Upload listType="picture-card" maxCount={1} accept="application/pdf">
-            <div>
-              <PlusOutlined />
-              <div style={{ marginTop: 8 }}>Upload</div>
-            </div>
-          </Upload>
+          <FileBase64
+            multiple={false}
+            onDone={({ base64 }) => setDetails({ ...details, resume: base64 })}
+          />
         </Form.Item>
+
         <div className="col-12 text-center">
           <Button variant="contained" color="primary" type="submit">
             Submit

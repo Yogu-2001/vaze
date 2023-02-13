@@ -1,5 +1,9 @@
 import * as React from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridToolbarExport,
+} from "@mui/x-data-grid";
 import axios from "axios";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import CancelIcon from "@material-ui/icons/Cancel";
@@ -9,6 +13,7 @@ import { Button, Link, MenuItem, Select, TextField } from "@material-ui/core";
 import { message } from "antd";
 import { useDispatch } from "react-redux";
 import { setDrives } from "../../redux/features/driveSlice";
+import GetAppOutlinedIcon from "@material-ui/icons/GetAppOutlined";
 const columns = [
   {
     field: "_id",
@@ -54,6 +59,14 @@ const columns = [
   },
 ];
 
+function CustomToolbar() {
+  return (
+    <GridToolbarContainer>
+      <GridToolbarExport />
+    </GridToolbarContainer>
+  );
+}
+
 const AllStudentsTable = () => {
   const dispatch = useDispatch();
   const [rows, setRows] = React.useState([]);
@@ -63,6 +76,7 @@ const AllStudentsTable = () => {
     companyName: "",
     package: "",
   });
+
   const getAllStudents = async () => {
     await axios
       .get("http://localhost:8080/api/v1/admin/get-allstudents/")
@@ -102,6 +116,9 @@ const AllStudentsTable = () => {
         disableSelectionOnClick
         getRowId={(row) => row._id}
         onSelectionModelChange={(itm) => setSelectedRows(itm)}
+        components={{
+          Toolbar: CustomToolbar,
+        }}
       />
       <form className="col-10 mx-auto my-3 " onSubmit={updateStudent}>
         <TextField
