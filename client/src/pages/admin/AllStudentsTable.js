@@ -66,11 +66,11 @@ function CustomToolbar() {
     </GridToolbarContainer>
   );
 }
-
+// doc_id name company_name package
 const AllStudentsTable = () => {
   const dispatch = useDispatch();
-  const [rows, setRows] = React.useState([]);
-  const [selectedRows, setSelectedRows] = React.useState([]);
+  const [rows, setRows] = React.useState([]); //all students
+  const [selectedRows, setSelectedRows] = React.useState([]); // id of selected rows
   const [companies, setCompanies] = React.useState([]);
   const [formData, setFormData] = React.useState({
     companyName: "",
@@ -92,16 +92,39 @@ const AllStudentsTable = () => {
     getAllStudents();
   }, []);
 
+  const callFunc = async () => {
+    //  setData([...data, { ...formData, _id: selectedRows[i] }]);
+    var i = 0;
+    const arrr = [];
+    for (i; i < selectedRows.length; i++) {
+      arrr.push({
+        company: formData.companyName,
+        package: formData.package,
+        username: selectedRows[i].name,
+        branch: selectedRows[i].branch,
+      });
+    }
+    return arrr;
+  };
   const updateStudent = async (e) => {
     e.preventDefault();
+    const rrr = await callFunc();
+
     await axios
-      .put("http://localhost:8080/api/v1/admin/update-placed-status", {
-        ...formData,
-        selectedRows,
-      })
+      .post("http://localhost:8080/api/v1/admin/add-placed-students", rrr)
       .then((res) => {
         message.success(res.data.message);
-        getAllStudents();
+        setFormData({
+          companyName: "",
+          package: "",
+        });
+      })
+      .catch((error) => {
+        message.error(error.response.data.message);
+        setFormData({
+          companyName: "",
+          package: "",
+        });
       });
   };
   return (
@@ -115,52 +138,63 @@ const AllStudentsTable = () => {
         checkboxSelection
         disableSelectionOnClick
         getRowId={(row) => row._id}
-        onSelectionModelChange={(itm) => setSelectedRows(itm)}
+        onSelectionModelChange={(ids) => {
+          const selectedIDs = new Set(ids);
+          const selectedRowData = rows.filter((row) =>
+            selectedIDs.has(row._id.toString())
+          );
+          setSelectedRows(selectedRowData);
+        }}
         components={{
           Toolbar: CustomToolbar,
         }}
       />
-      <form className="col-10 mx-auto my-3 " onSubmit={updateStudent}>
-        <TextField
-          variant="outlined"
-          name="package"
-          type={"number"}
-          label="Package"
-          required
-          value={formData.package}
-          onChange={(e) =>
-            setFormData({ ...formData, package: e.target.value })
-          }
-          className="col-6 my-4"
-        />
-        <br />
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          name="companyName"
-          value={formData.companyName}
-          onChange={(e) =>
-            setFormData({ ...formData, companyName: e.target.value })
-          }
-          className="col-6 my-4"
+      <section className="col-12 ">
+        <form
+          className="col-10 mx-auto my-3 text-center"
+          onSubmit={updateStudent}
         >
-          {companies &&
-            companies.map((company) => (
-              <MenuItem value={company?.companyName}>
-                {company?.companyName}
-              </MenuItem>
-            ))}
-        </Select>
-        <br />
-        <Button
-          variant="contained"
-          color="primary"
-          type="submit"
-          className="col-6 my-2"
-        >
-          Update Selected Rows
-        </Button>
-      </form>
+          <TextField
+            variant="outlined"
+            name="package"
+            type={"number"}
+            label="Package"
+            required
+            value={formData.package}
+            onChange={(e) =>
+              setFormData({ ...formData, package: e.target.value })
+            }
+            className="col-md-6 col-11 my-4"
+          />
+          <br />
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            name="companyName"
+            value={formData.companyName}
+            onChange={(e) =>
+              setFormData({ ...formData, companyName: e.target.value })
+            }
+            className="col-md-6 col-11 my-4 text-left"
+          >
+            {companies &&
+              companies.map((company) => (
+                <MenuItem value={company?.companyName}>
+                  {company?.companyName}
+                </MenuItem>
+              ))}
+          </Select>
+          <br />
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            className="col-md-6 col-11 my-4"
+          >
+            Update Selected Rows
+          </Button>
+        </form>
+      </section>
     </>
   );
 };

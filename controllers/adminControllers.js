@@ -83,29 +83,15 @@ export const allstudents = async (req, res) => {
   }
 };
 
-export const updatePlacedStatus = async (req, res) => {
+export const addPlacedStudent = async (req, res) => {
   try {
-    const updated = await profileModel.updateMany(
-      { _id: { $in: req.body.selectedRows } },
-      {
-        $set: {
-          placed: true,
-        },
-        $push: {
-          placedData: {
-            company: req.body.companyName,
-            package: req.body.package,
-          },
-        },
-      },
-
-      { multi: true }
-    );
-
-    res.status(200).send({ message: "records updated successfully" });
+    const placedStudent = new allPlacementModel.insertMany(req.body);
+    await placedStudent.save();
+    res.status(200).send({ message: "placed students added successfully" });
   } catch (error) {
+    console.log(error);
     res.status(501).json({
-      message: "update failed",
+      message: "student adding failed",
       success: false,
       error: error,
     });

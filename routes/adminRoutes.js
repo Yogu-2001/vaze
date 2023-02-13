@@ -4,7 +4,7 @@ import {
   addStudents,
   addPlacement,
   allstudents,
-  updatePlacedStatus,
+  addPlacedStudent,
 } from "../controllers/adminControllers.js";
 
 //router object
@@ -14,5 +14,5 @@ router.post("/add-student", addStudents);
 router.post("/add-placement", addPlacement);
 router.post("/add-notice", addNotice);
 router.get("/get-allstudents", allstudents);
-router.put("/update-placed-status", updatePlacedStatus);
+router.post("/add-placed-students", addPlacedStudent);
 export default router;
