@@ -4,6 +4,30 @@ import { comparePassword, hashPassword } from "./../helpers/authHelper.js";
 import placementModel from "../models/placementModel.js";
 import profileModel from "../models/profileModel.js";
 import allPlacementModel from "../models/allPlacementModel.js";
+import { transporter } from "../server.js";
+export const sendMailNotification = async (req, res) => {
+  var mailOptions = {
+    from: process.env.MAIL_USERNAME,
+    to: req.body.emailarray,
+    subject: "TPO cell vidyalankar",
+    template: "email",
+    context: {
+      company: req.body.formData.companyName,
+      package: req.body.formData.package,
+    },
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+      res.status(500).send(error);
+    } else {
+      // console.log(info.response);
+      res.status(200).json({ message: "emails send success" });
+    }
+  });
+};
+
 export const addStudents = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -85,13 +109,26 @@ export const allstudents = async (req, res) => {
 
 export const addPlacedStudent = async (req, res) => {
   try {
-    const placedStudent = new allPlacementModel.insertMany(req.body);
-    await placedStudent.save();
-    res.status(200).send({ message: "placed students added successfully" });
+    allPlacementModel.insertMany(req.body, (err, resp) => {
+      res.status(200).send({ message: "placed students added successfully" });
+    });
   } catch (error) {
     console.log(error);
     res.status(501).json({
       message: "student adding failed",
+      success: false,
+      error: error,
+    });
+  }
+};
+
+export const getAllPlaced = async (req, res) => {
+  try {
+    const allplaced = await allPlacementModel.find({});
+    res.status(200).send(allplaced);
+  } catch (error) {
+    res.status(501).json({
+      message: "fetch  failed",
       success: false,
       error: error,
     });

@@ -19,4 +19,4 @@ const allPlacedStudentSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model("placed_student", allPlacedStudentSchema);
+export default mongoose.model("placed-student", allPlacedStudentSchema);

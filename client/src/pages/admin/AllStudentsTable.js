@@ -14,6 +14,9 @@ import { message } from "antd";
 import { useDispatch } from "react-redux";
 import { setDrives } from "../../redux/features/driveSlice";
 import GetAppOutlinedIcon from "@material-ui/icons/GetAppOutlined";
+
+var emailarray = [];
+
 const columns = [
   {
     field: "_id",
@@ -103,6 +106,8 @@ const AllStudentsTable = () => {
         username: selectedRows[i].name,
         branch: selectedRows[i].branch,
       });
+
+      emailarray.push(selectedRows[i].email);
     }
     return arrr;
   };
@@ -112,8 +117,16 @@ const AllStudentsTable = () => {
 
     await axios
       .post("http://localhost:8080/api/v1/admin/add-placed-students", rrr)
-      .then((res) => {
+      .then(async (res) => {
         message.success(res.data.message);
+        await axios
+          .post("http://localhost:8080/api/v1/admin/send-email-notification", {
+            emailarray,
+            formData,
+          })
+          .then((res) => {
+            message.success(res.data.message);
+          });
         setFormData({
           companyName: "",
           package: "",
