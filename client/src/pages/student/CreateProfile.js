@@ -7,16 +7,19 @@ import axios from "axios";
 import FileBase64 from "react-file-base64";
 const CreateProfile = () => {
   const { user } = useSelector((state) => state.auth);
-  const [details, setDetails] = useState({});
+  const [details, setDetails] = useState();
 
   const onFinish = async (values) => {
-    await axios
+    console.log(values);
+    setDetails({ ...details, ...values });
+    axios
       .post("http://localhost:8080/api/v1/user/create-profile", {
         ...details,
         userId: user?._id,
       })
       .then((res) => {
         message.success(res.data.message);
+        alert(res.data.message);
       })
       .catch((error) => {
         message.error(error);
@@ -205,7 +208,6 @@ const CreateProfile = () => {
           label="upload resume"
           rules={[{ required: true, message: "Please input your resume!" }]}
           className="col-md-3 col-sm-5 col-10 mx-2"
-          required
         >
           <FileBase64
             multiple={false}

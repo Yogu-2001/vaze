@@ -125,7 +125,15 @@ export const addPlacedStudent = async (req, res) => {
 export const getAllPlaced = async (req, res) => {
   try {
     const allplaced = await allPlacementModel.find({});
-    res.status(200).send(allplaced);
+    const aggrcount = await allPlacementModel.aggregate([
+      { $group: { _id: "$company", count: { $sum: 1 } } },
+    ]);
+
+    const branchCount = await allPlacementModel.aggregate([
+      { $group: { _id: "$branch", count: { $sum: 1 } } },
+    ]);
+
+    res.status(200).json({ allplaced, aggrcount, branchCount });
   } catch (error) {
     res.status(501).json({
       message: "fetch  failed",

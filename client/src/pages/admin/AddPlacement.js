@@ -36,11 +36,15 @@ const AddPlacement = () => {
   };
 
   const handleSubmit = async (e) => {
+    console.log(branches);
     e.preventDefault();
-    setCon({ ...con, branchcriteria: branches });
+
     con.jdfile &&
       (await axios
-        .post("http://localhost:8080/api/v1/admin/add-placement", con)
+        .post("http://localhost:8080/api/v1/admin/add-placement", {
+          ...con,
+          branchcriteria: branches,
+        })
         .then((res) => {
           message.success(res.data.message);
           setCon({

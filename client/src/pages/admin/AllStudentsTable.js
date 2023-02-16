@@ -118,7 +118,8 @@ const AllStudentsTable = () => {
     await axios
       .post("http://localhost:8080/api/v1/admin/add-placed-students", rrr)
       .then(async (res) => {
-        message.success(res.data.message);
+        // message.success(res.data.message);
+        alert(res.data.message);
         await axios
           .post("http://localhost:8080/api/v1/admin/send-email-notification", {
             emailarray,

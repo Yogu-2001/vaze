@@ -17,6 +17,7 @@ import AddPlacement from "./pages/admin/AddPlacement";
 import AllStudentsTable from "./pages/admin/AllStudentsTable";
 import AllDrivesTable from "./pages/student/AllDrivesTable";
 import ViewProfile from "./pages/student/ViewProfile";
+import Home from "./comment-section/Home";
 const App = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.alert);
@@ -100,6 +101,14 @@ const App = () => {
             element={
               <PrivateRoute>
                 <ViewProfile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/chat-forum"
+            element={
+              <PrivateRoute>
+                <Home />
               </PrivateRoute>
             }
           />

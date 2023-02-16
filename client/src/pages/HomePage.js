@@ -1,7 +1,19 @@
-import React from "react";
-
+import HomeSection from "../components/HomeSection";
+import RecruitersLogos from "../components/RecruitersLogo";
+import Footer from "../components/Footer";
+import Accordation from "../components/Accordation";
+import SendMail from "../components/sendMails";
 const HomePage = () => {
-  return <div>HomePage</div>;
+  return (
+    <>
+      <HomeSection />
+      <RecruitersLogos />
+      {/* <TeamSection /> */}
+      <Accordation />
+      <SendMail />
+      <Footer />
+    </>
+  );
 };
 
 export default HomePage;
