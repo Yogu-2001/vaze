@@ -3,6 +3,7 @@ import { Button, TextField } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { message } from "antd";
 import axios from "axios";
+import Replies from "./Replies";
 
 const Comment = ({ comment }) => {
   const [togglereply, setToggleReply] = useState(false);
@@ -77,6 +78,7 @@ const Comment = ({ comment }) => {
               </Button>
             </div>
           </form>
+          <Replies commentId={comment._id} />
         </>
       )}
     </>

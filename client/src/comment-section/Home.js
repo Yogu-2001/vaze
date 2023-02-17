@@ -23,17 +23,6 @@ const Home = () => {
       .catch((err) => {
         message.error(err.response.data.message);
       });
-    //  await addDoc(collection(db, `forum`), {
-    //    question,
-    //    timeStamp: serverTimestamp(),
-    //    user: loggedInUser,
-    //  })
-    //    .then((response) => {
-    //      toast.success("Comment added successfully");
-    //    })
-    //    .catch((error) => {
-    //      console.log(error);
-    //    });
   };
   return (
     <>
