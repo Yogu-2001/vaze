@@ -240,6 +240,11 @@ export default function Layout() {
                 icon: <PageviewIcon />,
               },
               {
+                text: "Discussion-Forum",
+                path: "/chat-forum",
+                icon: <ForumIcon />,
+              },
+              {
                 text: "All Drives",
                 path: "/student/all-drives",
                 icon: (

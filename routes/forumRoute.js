@@ -11,4 +11,38 @@ router.post("/add-query", async (req, res) => {
   }
 });
 
+router.get("/get-all-comments", async (req, res) => {
+  try {
+    const docs = await commentModel.find({}).populate("user");
+    res.status(200).json(docs);
+  } catch (error) {
+    res.status(501).json({ message: "failed to fetch documents", error });
+  }
+});
+
+router.put("/add-reply", async (req, res) => {
+  try {
+    commentModel
+      .findByIdAndUpdate(
+        { _id: req.body.question_id },
+        {
+          $push: {
+            replies: {
+              reply: req.body.reply,
+              user: req.body.username,
+            },
+          },
+        }
+      )
+      .then((doc) => {
+        res.status(200).json({ message: "reply added success", doc });
+      })
+      .catch((err) => {
+        res.status(501).json({ message: "error in adding reply", err });
+      });
+  } catch (error) {
+    res.status(501).json({ message: "failed to fetch documents", error });
+  }
+});
+
 export default router;

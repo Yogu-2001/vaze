@@ -22,6 +22,18 @@ form {
   background-color: white;
 }
 
+.letter-circle {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: crimson;
+  color: white;
+}
+
 .MuiAppBar-colorPrimary {
   background: rgb(54, 58, 102);
   background: linear-gradient(

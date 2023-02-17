@@ -14,6 +14,13 @@ const comentSchema = new mongoose.Schema({
     ref: "users",
     required: true,
   },
+  replies: [
+    {
+      reply: String,
+      user: String,
+      timestamp: { type: Date, default: Date.now },
+    },
+  ],
 });
 
 export default mongoose.model("chat-forum", comentSchema);
