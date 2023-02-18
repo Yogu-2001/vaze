@@ -34,3 +34,12 @@ export const getallplacedcompanies = async (req, res) => {
     res.status(501).json({ message: "failed to fetch placed data" });
   }
 };
+
+export const getProfile = async (req, res) => {
+  try {
+    const getprofile = await profileModel.find({ userId: req.params.id });
+    res.status(200).json(getprofile);
+  } catch (error) {
+    res.status(501).json({ message: "failed to fetch placed data" });
+  }
+};

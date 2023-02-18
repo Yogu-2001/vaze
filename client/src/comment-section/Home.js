@@ -17,6 +17,7 @@ const Home = () => {
       })
       .then((res) => {
         // setAskedQuestion(res.data.query);
+        window.location.reload();
         message.success(res.data.message);
         setQuestion("");
       })
@@ -27,7 +28,10 @@ const Home = () => {
   return (
     <>
       <main className="col-11 mx-auto d-flex flex-wrap justify-content-between py-4">
-        <Card className="col-lg-5 col-11 mx-auto p-2">
+        <Card
+          className="col-lg-5 col-11 mx-auto p-2"
+          style={{ height: "fit-content" }}
+        >
           <form onSubmit={handleSubmit}>
             <h4>Add Topic Of Discussion</h4>
             <TextField
@@ -44,7 +48,7 @@ const Home = () => {
             </Button>
           </form>
         </Card>
-        <Card className="col-lg-6 col-12 mx-auto my-3 py-3 px-2">
+        <Card className="col-lg-6 col-12 mx-auto my-3 py-3 px-2 ">
           <Comments />
         </Card>
       </main>

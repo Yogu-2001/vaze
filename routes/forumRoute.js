@@ -48,7 +48,7 @@ router.put("/add-reply", async (req, res) => {
 router.get("/get-all-replies/:id", async (req, res) => {
   try {
     const allreplies = await commentModel.find({ _id: req.params.id });
-    res.status(200).json(allreplies);
+    res.status(200).json(allreplies[0]);
   } catch (error) {
     res.status(501).json({ message: "failed to fetch replies", error });
   }

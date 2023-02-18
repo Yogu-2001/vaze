@@ -16,7 +16,7 @@ import AddNotice from "./pages/admin/AddNotice";
 import AddPlacement from "./pages/admin/AddPlacement";
 import AllStudentsTable from "./pages/admin/AllStudentsTable";
 import AllDrivesTable from "./pages/student/AllDrivesTable";
-import ViewProfile from "./pages/student/ViewProfile";
+import ViewProfile from "./pages/ViewProfile";
 import Home from "./comment-section/Home";
 const App = () => {
   const dispatch = useDispatch();
@@ -97,7 +97,7 @@ const App = () => {
             }
           />
           <Route
-            path="/view-drives"
+            path="/student/view-profile/:id"
             element={
               <PrivateRoute>
                 <ViewProfile />
@@ -114,6 +114,14 @@ const App = () => {
           />
           <Route
             path="/create-profile"
+            element={
+              <PrivateRoute>
+                <CreateProfile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/student/update-profile/:id"
             element={
               <PrivateRoute>
                 <CreateProfile />

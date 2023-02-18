@@ -20,6 +20,7 @@ const Comment = ({ comment }) => {
       })
       .then((res) => {
         message.success(res.data.message);
+        window.location.reload();
       })
       .catch((err) => {
         message.error(err.response.data.message);
@@ -53,6 +54,7 @@ const Comment = ({ comment }) => {
       >
         Reply
       </Button>
+
       {togglereply && (
         <>
           <form onSubmit={handleSubmit}>
@@ -78,9 +80,10 @@ const Comment = ({ comment }) => {
               </Button>
             </div>
           </form>
-          <Replies commentId={comment._id} />
         </>
       )}
+
+      <Replies commentId={comment._id} />
     </>
   );
 };

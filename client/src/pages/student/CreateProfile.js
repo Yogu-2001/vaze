@@ -1,14 +1,28 @@
 import { DatePicker, Form, Input, message, Radio, Select, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { Box, Button, Card } from "@material-ui/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import FileBase64 from "react-file-base64";
+import { useParams } from "react-router-dom";
 const CreateProfile = () => {
   const { user } = useSelector((state) => state.auth);
   const [details, setDetails] = useState();
+  const params = useParams();
 
+  useEffect(() => {
+    const getprofiledetails = async () => {
+      await axios
+        .get(
+          `http://localhost:8080/api/v1/user/get-profile-details/${params.id}`
+        )
+        .then((res) => {
+          setDetails(res.data[0]);
+        });
+    };
+    getprofiledetails();
+  }, []);
   const onFinish = async (values) => {
     console.log(values);
     setDetails({ ...details, ...values });

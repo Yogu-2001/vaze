@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Comment from "./Comment";
+import Replies from "./Replies";
 
 const Comments = () => {
   const [comments, setComments] = useState([]);
@@ -25,7 +26,9 @@ const Comments = () => {
       {comments ? (
         <section>
           {comments.map((comment, index) => (
-            <Comment comment={comment} key={index} />
+            <>
+              <Comment comment={comment} key={index} />
+            </>
           ))}
         </section>
       ) : (

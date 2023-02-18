@@ -12,7 +12,7 @@ import axios from "axios";
 const Replies = ({ commentId }) => {
   const [replies, setReplies] = useState([]);
   useEffect(() => {
-    const getAllReplies = async (req, res) => {
+    const getAllReplies = async () => {
       await axios
         .get(`http://localhost:8080/api/v1/get-all-replies/${commentId}`)
         .then((res) => {
@@ -24,7 +24,7 @@ const Replies = ({ commentId }) => {
     };
 
     getAllReplies();
-  }, [commentId]);
+  }, []);
 
   return (
     <>

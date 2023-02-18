@@ -9,12 +9,12 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import CancelIcon from "@material-ui/icons/Cancel";
 import EditIcon from "@material-ui/icons/Edit";
 import Avatar from "@material-ui/core/Avatar";
-import { Button, Link, MenuItem, Select, TextField } from "@material-ui/core";
+import { Button, MenuItem, Select, TextField } from "@material-ui/core";
 import { message } from "antd";
 import { useDispatch } from "react-redux";
 import { setDrives } from "../../redux/features/driveSlice";
 import GetAppOutlinedIcon from "@material-ui/icons/GetAppOutlined";
-
+import { Link } from "react-router-dom";
 var emailarray = [];
 
 const columns = [
@@ -23,7 +23,9 @@ const columns = [
     headerName: "ID",
     width: 100,
     renderCell: (params) => (
-      <Avatar alt="Travis Howard" src={`${params.row.photourl}`} />
+      <Link to={`/student/view-profile/${params.row.userId}`}>
+        <Avatar alt="Travis Howard" src={`${params.row.photourl}`} />
+      </Link>
     ),
   },
   {
