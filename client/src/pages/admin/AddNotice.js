@@ -10,7 +10,7 @@ const AddNotice = () => {
     e.preventDefault();
     console.log(state);
     await axios
-      .post("http://localhost:8080/api/v1/admin/add-notice", { notice: state })
+      .post("/api/v1/admin/add-notice", { notice: state })
       .then((res) => {
         message.success(res.data.message);
         setState("");

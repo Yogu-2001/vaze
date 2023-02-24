@@ -42,20 +42,20 @@ const columns = [
   { field: "engineering_division", headerName: "Division", width: 130 },
   { field: "engineeringAggrpercent", headerName: "Aggr CGPA", width: 150 },
   { field: "engineeringpercent", headerName: "Eng Aggr %", width: 170 },
-  {
-    field: "placed",
-    headerName: "Status",
-    width: 130,
-    renderCell: (params) => (
-      <p className="my-auto">
-        {params.value ? (
-          <CheckCircleIcon style={{ color: "greenyellow" }} />
-        ) : (
-          <CancelIcon style={{ color: "red" }} />
-        )}
-      </p>
-    ),
-  },
+  // {
+  //   field: "placed",
+  //   headerName: "Status",
+  //   width: 130,
+  //   renderCell: (params) => (
+  //     <p className="my-auto">
+  //       {params.value ? (
+  //         <CheckCircleIcon style={{ color: "greenyellow" }} />
+  //       ) : (
+  //         <CancelIcon style={{ color: "red" }} />
+  //       )}
+  //     </p>
+  //   ),
+  // },
   {
     field: "action",
     headerName: "Action",
@@ -83,14 +83,12 @@ const AllStudentsTable = () => {
   });
 
   const getAllStudents = async () => {
-    await axios
-      .get("http://localhost:8080/api/v1/admin/get-allstudents/")
-      .then((res) => {
-        console.log(res.data);
-        setRows(res.data.allstudents);
-        dispatch(setDrives(res.data.allCompanies));
-        setCompanies(res.data.allCompanies);
-      });
+    await axios.get("/api/v1/admin/get-allstudents/").then((res) => {
+      console.log(res.data);
+      setRows(res.data.allstudents);
+      dispatch(setDrives(res.data.allCompanies));
+      setCompanies(res.data.allCompanies);
+    });
   };
 
   React.useEffect(() => {
@@ -118,12 +116,12 @@ const AllStudentsTable = () => {
     const rrr = await callFunc();
 
     await axios
-      .post("http://localhost:8080/api/v1/admin/add-placed-students", rrr)
+      .post("/api/v1/admin/add-placed-students", rrr)
       .then(async (res) => {
         // message.success(res.data.message);
         alert(res.data.message);
         await axios
-          .post("http://localhost:8080/api/v1/admin/send-email-notification", {
+          .post("/api/v1/admin/send-email-notification", {
             emailarray,
             formData,
           })

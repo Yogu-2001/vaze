@@ -20,14 +20,6 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    notifications: {
-      type: Array,
-      default: [],
-    },
-    seennotifications: {
-      type: Array,
-      default: [],
-    },
   },
   { timestamps: true }
 );

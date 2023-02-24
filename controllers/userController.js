@@ -43,3 +43,31 @@ export const getProfile = async (req, res) => {
     res.status(501).json({ message: "failed to fetch placed data" });
   }
 };
+
+export const updateProfile = async (req, res) => {
+  try {
+    profileModel.findByIdAndUpdate(
+      req.body._id,
+      req.body,
+      // { new: true },
+      (err, detail) => {
+        // Handle any possible database errors
+        if (err) return res.status(500).send("failed to update profile");
+        return res
+          .status(200)
+          .send({ message: "profile updated success", detail });
+      }
+    );
+  } catch (error) {
+    res.status(501).json({ message: "failed to update details" });
+  }
+};
+
+export const getDrive = async (req, res) => {
+  try {
+    const drive = await placementModel.findById(req.params.id);
+    res.status(200).json(drive);
+  } catch (error) {
+    res.status(501).json({ message: "failed to fetch drive" });
+  }
+};

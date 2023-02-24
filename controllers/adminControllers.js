@@ -30,7 +30,7 @@ export const sendMailNotification = async (req, res) => {
 
 export const addStudents = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
     //validations
 
     //check user
@@ -49,6 +49,7 @@ export const addStudents = async (req, res) => {
       name,
       email,
       password: hashedPassword,
+      role,
     }).save();
 
     res.status(201).send({
@@ -109,6 +110,7 @@ export const allstudents = async (req, res) => {
 
 export const addPlacedStudent = async (req, res) => {
   try {
+    // profileModel.updateMany({_id:{$in:}})
     allPlacementModel.insertMany(req.body, (err, resp) => {
       res.status(200).send({ message: "placed students added successfully" });
     });

@@ -12,9 +12,11 @@ import {
 import axios from "axios";
 import { message } from "antd";
 import FileBase64 from "react-file-base64";
+import { useSelector } from "react-redux";
 
 const AddPlacement = () => {
   const editor = useRef("");
+  const { user } = useSelector((state) => state.auth);
   const [checked, setChecked] = useState(false);
   const [branches, setBranches] = useState([]);
   const [con, setCon] = useState({
@@ -24,6 +26,7 @@ const AddPlacement = () => {
     branchcriteria: [],
     jdfile: "",
     engAggrrpercentCriteria: "",
+    hr: user?._id,
   });
 
   const handleBranchChange = (e) => {
@@ -41,7 +44,7 @@ const AddPlacement = () => {
 
     con.jdfile &&
       (await axios
-        .post("http://localhost:8080/api/v1/admin/add-placement", {
+        .post("/api/v1/admin/add-placement", {
           ...con,
           branchcriteria: branches,
         })
@@ -122,7 +125,12 @@ const AddPlacement = () => {
         <h4>Criteria Form:</h4>
         <Typography>pick the candidates who can aply</Typography>
         <FormGroup>
-          {["CMPN", "INFT", "ETRX", "EXTC", "BIOM"].map((branch, i) => (
+          {[
+            "Computer Engineering",
+            "IT Engineering",
+            "Electronics Engineering",
+            "Electronics & Telecommunication Engineering",
+          ].map((branch, i) => (
             <FormControlLabel
               control={<Checkbox />}
               label={branch}

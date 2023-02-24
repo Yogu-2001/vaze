@@ -11,7 +11,7 @@ const Home = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await axios
-      .post("http://localhost:8080/api/v1/add-query", {
+      .post("/api/v1/add-query", {
         question,
         user: user,
       })

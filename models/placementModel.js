@@ -34,6 +34,10 @@ const placementSchema = new mongoose.Schema(
       type: String,
       default: "Zoya Chaudary",
     },
+    hr: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
+    },
   },
   { timestamps: true }
 );

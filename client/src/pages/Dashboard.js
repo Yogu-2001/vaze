@@ -60,14 +60,12 @@ const Dashboard = () => {
   };
   useEffect(() => {
     const getAllPlacedStudent = async () => {
-      await axios
-        .get("http://localhost:8080/api/v1/admin/get-all-placed")
-        .then((res) => {
-          console.log(res.data);
-          setPlaced(res.data.allplaced);
-          setCompanyPlaced(res.data.aggrcount);
-          setBranchSpecific(res.data.branchCount);
-        });
+      await axios.get("/api/v1/admin/get-all-placed").then((res) => {
+        console.log(res.data);
+        setPlaced(res.data.allplaced);
+        setCompanyPlaced(res.data.aggrcount);
+        setBranchSpecific(res.data.branchCount);
+      });
     };
     getAllPlacedStudent();
   }, []);

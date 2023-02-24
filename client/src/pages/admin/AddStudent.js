@@ -1,4 +1,4 @@
-import { message, Form } from "antd";
+import { message, Form, Select } from "antd";
 import { TextField, Button } from "@material-ui/core";
 import { setLoading } from "../../redux/features/alertSlice";
 import { useDispatch } from "react-redux";
@@ -6,14 +6,9 @@ import axios from "axios";
 const AddStudent = () => {
   const dispatch = useDispatch();
   const onFinish = (values) => {
-    const { name, email, password } = values;
     dispatch(setLoading(true));
     axios
-      .post("http://localhost:8080/api/v1/admin/add-student", {
-        name,
-        email,
-        password,
-      })
+      .post("/api/v1/admin/add-student", values)
       .then((res) => {
         message.success(res.data.message);
         dispatch(setLoading(false));
@@ -31,7 +26,7 @@ const AddStudent = () => {
     <Form
       style={{
         maxWidth: "360px",
-        margin: "150px auto",
+        margin: "50px auto",
         boxShadow: "1px 2px 10px aqua",
         padding: "20px 10px",
       }}
@@ -39,6 +34,7 @@ const AddStudent = () => {
       onFinishFailed={onFinishFailed}
     >
       <h4>Add Student</h4>
+
       <Form.Item
         name="name"
         rules={[{ required: true, message: "Please input your name!" }]}
@@ -61,6 +57,20 @@ const AddStudent = () => {
           placeholder="enter valid email"
           variant="standard"
           className="col-12 my-3"
+        />
+      </Form.Item>
+      <Form.Item
+        name="role"
+        rules={[{ required: true, message: "Please select your role!" }]}
+      >
+        <Select
+          defaultValue="Student"
+          className="col-12 my-3"
+          options={[
+            { value: 0, label: "Student" },
+            { value: 1, label: "Admin" },
+            { value: 2, label: "Company HR" },
+          ]}
         />
       </Form.Item>
       <Form.Item

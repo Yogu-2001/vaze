@@ -27,9 +27,7 @@ const ViewProfile = () => {
   useEffect(() => {
     const getuserdetails = async () => {
       await axios
-        .get(
-          `http://localhost:8080/api/v1/user/get-profile-details/${params.id}`
-        )
+        .get(`/api/v1/user/get-profile-details/${params.id}`)
         .then((res) => {
           setMyProfile(res.data[0]);
         });
@@ -43,7 +41,11 @@ const ViewProfile = () => {
       {myprofile ? (
         <section className="d-flex flex-wrap">
           <aside className="col-md-5 col-5 mx-auto d-flex flex-column align-items-center justify-content-center">
-            <img src={myprofile?.photourl} className="col-md-6 mb-3" />
+            <img
+              src={myprofile?.photourl}
+              className="col-md-6 mb-3"
+              style={{ maxWidth: "400px", maxHeight: "350px" }}
+            />
             <Typography variant="h4" color="secondary">
               {myprofile?.name}
             </Typography>

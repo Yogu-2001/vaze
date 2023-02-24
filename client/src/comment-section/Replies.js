@@ -14,7 +14,7 @@ const Replies = ({ commentId }) => {
   useEffect(() => {
     const getAllReplies = async () => {
       await axios
-        .get(`http://localhost:8080/api/v1/get-all-replies/${commentId}`)
+        .get(`/api/v1/get-all-replies/${commentId}`)
         .then((res) => {
           setReplies(res.data.replies);
         })

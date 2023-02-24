@@ -9,7 +9,7 @@ const Comments = () => {
   useEffect(() => {
     const getAllComments = async () => {
       await axios
-        .get("http://localhost:8080/api/v1/get-all-comments")
+        .get("/api/v1/get-all-comments")
         .then((res) => {
           setComments(res.data);
         })

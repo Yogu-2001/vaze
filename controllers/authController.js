@@ -52,6 +52,7 @@ export const loginController = async (req, res) => {
     }
     //check user
     const user = await userModel.findOne({ email });
+    console.log(user);
     if (!user) {
       return res.status(404).send({
         success: false,
@@ -78,7 +79,7 @@ export const loginController = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
-        role: user.role,
+        role: user?.role,
       },
       token,
     });

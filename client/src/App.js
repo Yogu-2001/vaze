@@ -18,6 +18,8 @@ import AllStudentsTable from "./pages/admin/AllStudentsTable";
 import AllDrivesTable from "./pages/student/AllDrivesTable";
 import ViewProfile from "./pages/ViewProfile";
 import Home from "./comment-section/Home";
+import ViewDrive from "./pages/student/ViewDrive";
+import HrRoute from "./routes/HrRoute";
 const App = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.alert);
@@ -40,14 +42,14 @@ const App = () => {
 
         <Routes>
           <Route
-            path="/"
+            path="/login"
             element={
               <PublicRoute>
                 <Login />
               </PublicRoute>
             }
           />
-          <Route path="/homepage" element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
           <Route
             path="/admin/add-student"
             element={
@@ -75,9 +77,9 @@ const App = () => {
           <Route
             path="/admin/add-drive/"
             element={
-              <AdminRoute>
+              <HrRoute>
                 <AddPlacement />
-              </AdminRoute>
+              </HrRoute>
             }
           />
           <Route
@@ -117,6 +119,14 @@ const App = () => {
             element={
               <PrivateRoute>
                 <CreateProfile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/view-drive/:id"
+            element={
+              <PrivateRoute>
+                <ViewDrive />
               </PrivateRoute>
             }
           />

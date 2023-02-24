@@ -13,7 +13,7 @@ const Comment = ({ comment }) => {
     e.preventDefault();
 
     await axios
-      .put("http://localhost:8080/api/v1/add-reply", {
+      .put("/api/v1/add-reply", {
         question_id: comment._id,
         username: user.name,
         reply: answer,

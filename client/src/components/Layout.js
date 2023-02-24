@@ -172,7 +172,7 @@ export default function Layout() {
       <Divider />
       <List>
         {user &&
-          user.role === 1 &&
+          [1, 2].includes(user.role) &&
           [
             {
               text: "Dashboard",
@@ -222,7 +222,7 @@ export default function Layout() {
           ))}
         <List>
           {user &&
-            user.role != 1 &&
+            ![1, 2].includes(user.role) &&
             [
               {
                 text: "Dashboard",

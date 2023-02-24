@@ -12,7 +12,7 @@ const Login = () => {
     const { email, password } = values;
     dispatch(setLoading(true));
     await axios
-      .post("http://localhost:8080/api/v1/auth/login", values)
+      .post("/api/v1/auth/login", values)
       .then((res) => {
         localStorage.setItem(
           "authToken",

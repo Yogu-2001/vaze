@@ -1,6 +1,8 @@
 import { Box, Button, Typography } from "@material-ui/core";
 import "../styles/homeSection.css";
 
+import { Link } from "react-router-dom";
+
 const HomeSection = () => {
   return (
     <Box className="homeSection">
@@ -14,8 +16,8 @@ const HomeSection = () => {
         learning to do
       </Typography>
 
-      <Button className="homeBtn" variant="contained">
-        Current Drives
+      <Button className="homeBtn" variant="contained" color="primary">
+        <Link to={"/login"}>Login</Link>
       </Button>
     </Box>
   );
