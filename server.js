@@ -10,6 +10,7 @@ import nodemailer from "nodemailer";
 import hbs from "nodemailer-express-handlebars";
 import path from "path";
 import forumRoutes from "./routes/forumRoute.js";
+import { fileURLToPath } from "url";
 //configure env
 dotenv.config();
 
@@ -18,6 +19,7 @@ const app = express();
 
 //middelwares
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.join(__dirname, "./client/build")));
 
 app.get("*", (req, res) => {
